@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btn1, btn2, btn_clear, btn_plus, btn_equal;
     TextView text_display;
 
-    // This is to evaluate the math expression
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
