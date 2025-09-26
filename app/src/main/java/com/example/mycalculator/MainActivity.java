@@ -10,19 +10,24 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn_clear, btn_plus, btn_equal, btn_minus, btn_mult, btn_dot, btn_div;
+    Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn_clear, btn_plus, btn_equal, btn_minus, btn_mult, btn_dot, btn_div;
     TextView text_display;
+    Boolean dotusable = true; // for on click
+
+    ScriptEngine engine; // for eval
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        engine = new ScriptEngineManager().getEngineByName("rhino");
 
         btn1 = (Button) findViewById(R.id.btn1);
         btn2 = (Button) findViewById(R.id.btn2);
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn7 = (Button) findViewById(R.id.btn7);
         btn8 = (Button) findViewById(R.id.btn8);
         btn9 = (Button) findViewById(R.id.btn9);
+        btn0 = (Button) findViewById(R.id.btn0);
         btn_plus = (Button) findViewById(R.id.btn_plus);
         btn_equal = (Button) findViewById(R.id.btn_equal);
         btn_clear = (Button) findViewById(R.id.btn_clear);
@@ -48,13 +54,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setClickListeners() {
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
+        btn3.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+        btn5.setOnClickListener(this);
+        btn6.setOnClickListener(this);
+        btn7.setOnClickListener(this);
+        btn8.setOnClickListener(this);
+        btn9.setOnClickListener(this);
+        btn0.setOnClickListener(this);
         btn_plus.setOnClickListener(this);
         btn_equal.setOnClickListener(this);
         btn_clear.setOnClickListener(this);
+        btn_div.setOnClickListener(this);
+        btn_dot.setOnClickListener(this);
+        btn_minus.setOnClickListener(this);
+        btn_mult.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        String str;
+        Character lastchar;
         switch (v.getId()) {
             case R.id.btn1:
                 addNumber("1");
@@ -62,8 +82,79 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn2:
                 addNumber("2");
                 break;
+            case R.id.btn3:
+                addNumber("3");
+                break;
+            case R.id.btn4:
+                addNumber("4");
+                break;
+            case R.id.btn5:
+                addNumber("5");
+                break;
+            case R.id.btn6:
+                addNumber("6");
+                break;
+            case R.id.btn7:
+                addNumber("7");
+                break;
+            case R.id.btn8:
+                addNumber("8");
+                break;
+            case R.id.btn9:
+                addNumber("9");
+                break;
+            case R.id.btn0:
+                addNumber("0");
+                break;
             case R.id.btn_plus:
-                addNumber("+");
+                str = text_display.getText().toString();
+                if(str.isEmpty()) {break;}
+                lastchar = str.charAt(str.length() - 1);
+                if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
+                    addNumber("+");
+                    dotusable = true;
+                }
+                break;
+            case R.id.btn_div:
+                str = text_display.getText().toString();
+                if(str.isEmpty()) {break;}
+                lastchar = str.charAt(str.length() - 1);
+                if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
+                    addNumber("/");
+                    dotusable = true;
+                }
+                break;
+            case R.id.btn_mult:
+                str = text_display.getText().toString();
+                if(str.isEmpty()) {break;}
+                lastchar = str.charAt(str.length() - 1);
+                if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
+                    addNumber("*");
+                    dotusable = true;
+                }
+                break;
+            case R.id.btn_minus:
+                str = text_display.getText().toString();
+                if(str.isEmpty()) {
+                    addNumber("-");
+                    break;
+                }
+                lastchar = str.charAt(str.length() - 1);
+                if(lastchar != '.'){
+                    addNumber("-");
+                    dotusable = true;
+                }
+                break;
+            case R.id.btn_dot:
+                str = text_display.getText().toString();
+                if(str.isEmpty()) {break;}
+                lastchar = str.charAt(str.length() - 1);
+                if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
+                    if(dotusable) {
+                        addNumber(".");
+                        dotusable = false;
+                    }
+                }
                 break;
             case R.id.btn_equal:
                 String result = null;
@@ -81,9 +172,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private String evaluate(String expression) throws Exception {
-        String result = evaluate(expression);
+        String result = engine.eval(expression).toString();
         BigDecimal decimal = new BigDecimal(result);
-        return decimal.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+        String val = decimal.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+        if(val.charAt(val.length() - 1) == '0' && val.charAt(val.length() -2) == '0'){
+            return val.substring(0, val.length() - 3);
+        } else{
+            return val;
+        }
     }
 
     private void addNumber(String number) {
