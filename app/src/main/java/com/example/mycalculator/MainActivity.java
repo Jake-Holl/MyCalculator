@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn_clear, btn_plus, btn_equal, btn_minus, btn_mult, btn_dot, btn_div;
     TextView text_display;
+    Boolean dotusable = true; // for on click
 
 
     @Override
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 lastchar = str.charAt(str.length() - 1);
                 if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
                     addNumber("+");
+                    dotusable = true;
                 }
                 break;
             case R.id.btn_div:
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 lastchar = str.charAt(str.length() - 1);
                 if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
                     addNumber("/");
+                    dotusable = true;
                 }
                 break;
             case R.id.btn_mult:
@@ -123,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 lastchar = str.charAt(str.length() - 1);
                 if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
                     addNumber("*");
+                    dotusable = true;
                 }
                 break;
             case R.id.btn_minus:
@@ -131,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 lastchar = str.charAt(str.length() - 1);
                 if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
                     addNumber("-");
+                    dotusable = true;
                 }
                 break;
             case R.id.btn_dot:
@@ -138,9 +143,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(str.isEmpty()) {break;}
                 lastchar = str.charAt(str.length() - 1);
                 if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
-                    addNumber(".");
+                    if(dotusable) {
+                        addNumber(".");
+                        dotusable = false;
+                    }
                 }
-                // works but still needs more logic to prevent stuff like 9.9.9
                 break;
             case R.id.btn_equal:
                 String result = null;
@@ -161,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String result = evaluate(expression);
         BigDecimal decimal = new BigDecimal(result);
         return decimal.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+        // all incorrect, watch video on brightspace
     }
 
     private void addNumber(String number) {
