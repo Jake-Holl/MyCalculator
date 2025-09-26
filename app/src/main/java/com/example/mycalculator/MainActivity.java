@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        String str;
+        Character lastchar;
         switch (v.getId()) {
             case R.id.btn1:
                 addNumber("1");
@@ -100,23 +102,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 addNumber("0");
                 break;
             case R.id.btn_plus:
-                addNumber("+");
+                str = text_display.getText().toString();
+                if(str.isEmpty()) {break;}
+                lastchar = str.charAt(str.length() - 1);
+                if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
+                    addNumber("+");
+                }
                 break;
             case R.id.btn_div:
-                addNumber("/");
+                str = text_display.getText().toString();
+                if(str.isEmpty()) {break;}
+                lastchar = str.charAt(str.length() - 1);
+                if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
+                    addNumber("/");
+                }
                 break;
             case R.id.btn_mult:
-                addNumber("*");
+                str = text_display.getText().toString();
+                if(str.isEmpty()) {break;}
+                lastchar = str.charAt(str.length() - 1);
+                if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
+                    addNumber("*");
+                }
                 break;
             case R.id.btn_minus:
-                addNumber("-");
+                str = text_display.getText().toString();
+                if(str.isEmpty()) {break;}
+                lastchar = str.charAt(str.length() - 1);
+                if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
+                    addNumber("-");
+                }
                 break;
             case R.id.btn_dot:
-                String str = text_display.getText().toString();
+                str = text_display.getText().toString();
                 if(str.isEmpty()) {break;}
-                if(str.charAt(str.length() - 1) != '.'){
+                lastchar = str.charAt(str.length() - 1);
+                if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
                     addNumber(".");
                 }
+                // works but still needs more logic to prevent stuff like 9.9.9
                 break;
             case R.id.btn_equal:
                 String result = null;
