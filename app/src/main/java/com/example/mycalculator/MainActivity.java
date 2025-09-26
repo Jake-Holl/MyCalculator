@@ -135,9 +135,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_minus:
                 str = text_display.getText().toString();
-                if(str.isEmpty()) {break;}
+                if(str.isEmpty()) {
+                    addNumber("-");
+                    break;
+                }
                 lastchar = str.charAt(str.length() - 1);
-                if(lastchar != '+' && lastchar != '-' && lastchar != '*' && lastchar != '/' && lastchar != '.'){
+                if(lastchar != '.'){
                     addNumber("-");
                     dotusable = true;
                 }
@@ -177,9 +180,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else{
             return val;
         }
-        // should not have .00 for ints
-        // probably also other stuff missing
-        // but overall almost everything is there
     }
 
     private void addNumber(String number) {
