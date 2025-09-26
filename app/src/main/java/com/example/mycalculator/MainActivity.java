@@ -48,9 +48,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setClickListeners() {
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
+        btn3.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+        btn5.setOnClickListener(this);
+        btn6.setOnClickListener(this);
+        btn7.setOnClickListener(this);
+        btn8.setOnClickListener(this);
+        btn9.setOnClickListener(this);
         btn_plus.setOnClickListener(this);
         btn_equal.setOnClickListener(this);
         btn_clear.setOnClickListener(this);
+        btn_div.setOnClickListener(this);
+        btn_dot.setOnClickListener(this);
+        btn_minus.setOnClickListener(this);
+        btn_mult.setOnClickListener(this);
     }
 
     @Override
@@ -62,8 +73,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn2:
                 addNumber("2");
                 break;
+            case R.id.btn3:
+                addNumber("3");
+                break;
+            case R.id.btn4:
+                addNumber("4");
+                break;
+            case R.id.btn5:
+                addNumber("5");
+                break;
+            case R.id.btn6:
+                addNumber("6");
+                break;
+            case R.id.btn7:
+                addNumber("7");
+                break;
+            case R.id.btn8:
+                addNumber("2");
+                break;
+            case R.id.btn9:
+                addNumber("9");
+                break;
             case R.id.btn_plus:
                 addNumber("+");
+                break;
+            case R.id.btn_div:
+                addNumber("/");
+                break;
+            case R.id.btn_mult:
+                addNumber("*");
+                break;
+            case R.id.btn_minus:
+                addNumber("-");
+                break;
+            case R.id.btn_dot:
+                addNumber(".");
                 break;
             case R.id.btn_equal:
                 String result = null;
