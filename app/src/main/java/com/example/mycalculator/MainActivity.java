@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 addNumber("7");
                 break;
             case R.id.btn8:
-                addNumber("2");
+                addNumber("8");
                 break;
             case R.id.btn9:
                 addNumber("9");
@@ -107,7 +107,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 addNumber("-");
                 break;
             case R.id.btn_dot:
-                addNumber(".");
+                String str = text_display.getText().toString();
+                if(str.isEmpty()) {break;}
+                if(str.charAt(str.length() - 1) != '.'){
+                    addNumber(".");
+                }
                 break;
             case R.id.btn_equal:
                 String result = null;
