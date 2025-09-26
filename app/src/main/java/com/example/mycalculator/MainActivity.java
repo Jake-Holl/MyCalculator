@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn_clear, btn_plus, btn_equal, btn_minus, btn_mult, btn_dot, btn_div;
+    Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btn_clear, btn_plus, btn_equal, btn_minus, btn_mult, btn_dot, btn_div;
     TextView text_display;
 
 
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn7 = (Button) findViewById(R.id.btn7);
         btn8 = (Button) findViewById(R.id.btn8);
         btn9 = (Button) findViewById(R.id.btn9);
+        btn0 = (Button) findViewById(R.id.btn0);
         btn_plus = (Button) findViewById(R.id.btn_plus);
         btn_equal = (Button) findViewById(R.id.btn_equal);
         btn_clear = (Button) findViewById(R.id.btn_clear);
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn7.setOnClickListener(this);
         btn8.setOnClickListener(this);
         btn9.setOnClickListener(this);
+        btn0.setOnClickListener(this);
         btn_plus.setOnClickListener(this);
         btn_equal.setOnClickListener(this);
         btn_clear.setOnClickListener(this);
@@ -93,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn9:
                 addNumber("9");
+                break;
+            case R.id.btn0:
+                addNumber("0");
                 break;
             case R.id.btn_plus:
                 addNumber("+");
