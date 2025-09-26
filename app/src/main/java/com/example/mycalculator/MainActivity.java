@@ -171,7 +171,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String evaluate(String expression) throws Exception {
         String result = engine.eval(expression).toString();
         BigDecimal decimal = new BigDecimal(result);
-        return decimal.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+        String val = decimal.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+        if(val.charAt(val.length() - 1) == '0' && val.charAt(val.length() -2) == '0'){
+            return val.substring(0, val.length() - 3);
+        } else{
+            return val;
+        }
         // should not have .00 for ints
         // probably also other stuff missing
         // but overall almost everything is there
