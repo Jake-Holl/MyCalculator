@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 
 
 
@@ -18,12 +20,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView text_display;
     Boolean dotusable = true; // for on click
 
+    ScriptEngine engine; // for eval
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        engine = new ScriptEngineManager().getEngineByName("rhino");
 
         btn1 = (Button) findViewById(R.id.btn1);
         btn2 = (Button) findViewById(R.id.btn2);
@@ -165,10 +169,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private String evaluate(String expression) throws Exception {
-        String result = evaluate(expression);
+        String result = engine.eval(expression).toString();
         BigDecimal decimal = new BigDecimal(result);
         return decimal.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
-        // all incorrect, watch video on brightspace
+        // should not have .00 for ints
+        // probably also other stuff missing
+        // but overall almost everything is there
     }
 
     private void addNumber(String number) {
