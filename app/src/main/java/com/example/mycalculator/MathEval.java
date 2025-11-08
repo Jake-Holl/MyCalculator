@@ -1,22 +1,26 @@
 package com.example.mycalculator;
 
-import net.objecthunter.exp4j.Expression;
-import net.objecthunter.exp4j.ExpressionBuilder;
 
-public final class MathEval {
-    private MathEval() {}
+import java.math.BigDecimal;
 
-    public static String eval(String expr) {
-        try {
-            Expression e = new ExpressionBuilder(expr).build();
-            double result = e.evaluate();
-            // strip trailing .0 for integers
-            if (Math.rint(result) == result) {
-                return String.valueOf((long) result);
-            }
-            return String.valueOf(result);
-        } catch (Exception ex) {
-            return "Error";
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
+public class MathEval {
+
+    public ScriptEngine engine;
+    public MathEval() {
+        engine = new ScriptEngineManager().getEngineByName("rhino");
+    }
+
+    public String evaluate(String expression) throws Exception {
+        String result = engine.eval(expression).toString();
+        BigDecimal decimal = new BigDecimal(result);
+        String val = decimal.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+        if(val.charAt(val.length() - 1) == '0' && val.charAt(val.length() -2) == '0'){
+            return val.substring(0, val.length() - 3);
+        } else{
+            return val;
         }
     }
 }
